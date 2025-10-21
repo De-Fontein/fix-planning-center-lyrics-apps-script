@@ -1,0 +1,13 @@
+{
+  "devDependencies": {
+    "@google/clasp": "^3.1.0"
+  },
+  "scripts": {
+    "login": "clasp login",
+    "create": "clasp create",
+    "push": "clasp push -P .",
+    "pull": "clasp pull",
+    "deploy": "clasp deploy",
+    "status": "clasp status"
+  }
+}
