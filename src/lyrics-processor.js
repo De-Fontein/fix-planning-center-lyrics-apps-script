@@ -11,10 +11,10 @@ class LyricsProcessor {
     let cleanedLyrics = lyrics;
 
     cleanedLyrics = this.removeInlineReferences(cleanedLyrics);
+    cleanedLyrics = this.stripHangingDashes(cleanedLyrics);
+    cleanedLyrics = this.replaceParenthesesDashes(cleanedLyrics);
     cleanedLyrics = this.trimLines(cleanedLyrics);
     cleanedLyrics = this.collapseMultipleBlankLines(cleanedLyrics);
-    cleanedLyrics = this.replaceParenthesesDashes(cleanedLyrics);
-    cleanedLyrics = this.stripHangingDashes(cleanedLyrics);
     cleanedLyrics = this.detectSectionHeaders(cleanedLyrics);
 
     let sections = this.parseSections(cleanedLyrics);
@@ -41,7 +41,7 @@ class LyricsProcessor {
   }
 
   stripHangingDashes(lyrics) {
-    return lyrics.replace(/\s-\s/g, '');
+    return lyrics.replace(/[ ]{1}-[ ]{1}/g, '');
   }
 
   removeInlineReferences(lyrics) {

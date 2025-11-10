@@ -46,6 +46,7 @@ function getDutchSectionTranslations() {
     return {
         'couplet': 'VERSE',
         'refrein': 'CHORUS',
+        'pre-refrein': 'PRECHORUS',
         'brug': 'BRIDGE',
         'uitro': 'OUTRO',
         'einde': 'ENDING',

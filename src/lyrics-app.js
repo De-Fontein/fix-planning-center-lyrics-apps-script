@@ -39,13 +39,13 @@ class LyricsApp {
     arrangements.forEach(arr => {
       const arrId = arr.id;
       // Throttle before fetching to avoid rate limits
-      Utilities.sleep(this.requestDelayMs);
+      Utilities.sleep(this.requestDelayMs * 0.5);
       const lyrics = this.api.getChordChart(songId, arrId);
       const cleaned = this.processor.cleanLyrics(lyrics);
 
       if (lyrics !== cleaned) {
         // Throttle before update as well
-        Utilities.sleep(this.requestDelayMs);
+        Utilities.sleep(this.requestDelayMs * 0.5);
         // TODO: Enable once verified
         // this.api.updateChordChart(songId, arrId, cleaned);
         Logger.log(`✅ Updated lyrics for "${title}" (Arrangement: ${arr.attributes.name})`);
