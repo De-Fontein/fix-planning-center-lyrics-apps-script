@@ -9,12 +9,37 @@ class PlanningCenterAPI {
     return 'Basic ' + Utilities.base64Encode(`${appId}:${secret}`);
   }
 
-  getSongs() {
-    const response = UrlFetchApp.fetch(`${this.baseUrl}/songs`, {
+  getAllSongs() {
+    const limit = 25;
+    let offset = 0;
+    let songs = [];
+    let hasNext = true;
+
+    while (hasNext) {
+      const data = this.getSongsPage(offset, limit);
+      const songsToAdd = Array.isArray(data.data) ? data.data : [];
+      songs = [...songs, ...songsToAdd];
+
+      // To avoid hitting rate limits
+      Utilities.sleep(500);
+
+      if (data.links?.next) {
+        offset += limit;
+      } else {
+        hasNext = false;
+      }
+    }
+
+    return songs;
+  }
+
+  getSongsPage(offset = 0, limit = 25) {
+    const url = `${this.baseUrl}/songs?offset=${offset}&per_page=${limit}`;
+    const response = UrlFetchApp.fetch(url, {
       headers: { Authorization: this.authHeader },
     });
     const data = JSON.parse(response.getContentText());
-    return data.data || [];
+    return data || { data: [] };
   }
 
   getArrangements(songId) {

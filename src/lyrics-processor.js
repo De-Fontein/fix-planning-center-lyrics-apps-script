@@ -11,6 +11,7 @@ class LyricsProcessor {
     cleanedLyrics = this.trimLines(cleanedLyrics);
     cleanedLyrics = this.collapseMultipleBlankLines(cleanedLyrics);
     cleanedLyrics = this.replaceParenthesesDashes(cleanedLyrics);
+    cleanedLyrics = this.stripHangingDashes(cleanedLyrics);
     cleanedLyrics = this.detectSectionHeaders(cleanedLyrics);
 
     let sections = this.parseSections(cleanedLyrics);
@@ -34,6 +35,11 @@ class LyricsProcessor {
 
   replaceParenthesesDashes(lyrics) {
     return lyrics.replace(/\)\s*-/g, ') .');
+  }
+
+  // replace dashes that start and end with whitespace
+  stripHangingDashes(lyrics) {
+    return lyrics.replace(/\s-\s/g, '');
   }
 
   detectSectionHeaders(lyrics) {

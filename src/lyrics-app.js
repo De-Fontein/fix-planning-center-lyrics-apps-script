@@ -15,11 +15,8 @@ class LyricsApp {
 
   run() {
     // TODO: Convert songs back to a constant after testing
-    let songs = this.api.getSongs();
+    const songs = this.api.getAllSongs();
     Logger.log(`🎵 Found ${songs.length} songs to check.`);
-
-    // TODO: Remove this temporary line which limits to 1 song for testing
-    songs = songs.slice(0, 1);
 
     songs.forEach(song => {
       try {

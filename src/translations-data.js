@@ -12,6 +12,7 @@ function getSectionHeaderTranslations() {
 
 function getStandardSectionTranslations() {
     return {
+        'general': 'GENERAL',
         'verse': 'VERSE',
         'chorus': 'CHORUS',
         'bridge': 'BRIDGE',
