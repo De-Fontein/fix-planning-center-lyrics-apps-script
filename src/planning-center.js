@@ -10,7 +10,7 @@ class PlanningCenterAPI {
   }
 
   getAllSongs() {
-    const limit = 25;
+    const limit = 100;
     let offset = 0;
     let songs = [];
     let hasNext = true;
@@ -49,7 +49,7 @@ class PlanningCenterAPI {
     return JSON.parse(response.getContentText()).data || [];
   }
 
-  getLyrics(songId, arrangementId) {
+  getChordChart(songId, arrangementId) {
     const url = `${this.baseUrl}/songs/${songId}/arrangements/${arrangementId}`;
     const response = UrlFetchApp.fetch(url, {
       headers: { Authorization: this.authHeader },
@@ -62,17 +62,19 @@ class PlanningCenterAPI {
     }
 
     const data = JSON.parse(response.getContentText());
-    return data.data?.attributes?.lyrics || '';
+    // return data.data?.attributes?.lyrics || '';
+    return data.data?.attributes?.chord_chart || '';
   }
 
-  updateLyrics(songId, arrangementId, newLyrics) {
+  updateChordChart(songId, arrangementId, newLyrics) {
     const url = `${this.baseUrl}/songs/${songId}/arrangements/${arrangementId}`;
     const payload = JSON.stringify({
       data: {
         type: 'Arrangement',
         id: arrangementId,
         attributes: {
-          lyrics: newLyrics
+          chord_chart: newLyrics,
+          // lyrics: newLyrics
         }
       }
     });

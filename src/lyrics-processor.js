@@ -6,8 +6,11 @@ class LyricsProcessor {
   }
 
   cleanLyrics(lyrics) {
+    Logger.log(`Original Lyrics:\n${lyrics}`);
+
     let cleanedLyrics = lyrics;
 
+    cleanedLyrics = this.removeInlineReferences(cleanedLyrics);
     cleanedLyrics = this.trimLines(cleanedLyrics);
     cleanedLyrics = this.collapseMultipleBlankLines(cleanedLyrics);
     cleanedLyrics = this.replaceParenthesesDashes(cleanedLyrics);
@@ -37,9 +40,15 @@ class LyricsProcessor {
     return lyrics.replace(/\)\s*-/g, ') .');
   }
 
-  // replace dashes that start and end with whitespace
   stripHangingDashes(lyrics) {
     return lyrics.replace(/\s-\s/g, '');
+  }
+
+  removeInlineReferences(lyrics) {
+    const referenceList = getReferenceList();
+    // find all matches of text between parentheses that contain any of the referenceList items
+    const regex = new RegExp(`\\(([^)]+(?:\\s*(${referenceList.map(ref => ref.replace('.', '\\.')).join('|')})\\s*)+)\\)`, 'gi');
+    return lyrics.replace(regex, '');
   }
 
   detectSectionHeaders(lyrics) {

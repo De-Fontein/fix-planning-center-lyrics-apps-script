@@ -1,0 +1,28 @@
+function getReferenceList() {
+    return [
+        'to chorus',
+        'to instr.',
+        'to turn.',
+        'to br.',
+        'to ch.',
+        'to tag',
+        'naar refrein',
+        'naar instr.',
+        'naar tag',
+        'naar naspel',
+        'naar brug',
+        'naar slot',
+        'naar chorus',
+        'naar couplet',
+        '2x',
+        '3x',
+        '4x',
+        '5x',
+        '6x',
+        'x2',
+        'x3',
+        'x4',
+        'x5',
+        'x6',
+    ];
+}

@@ -11,6 +11,8 @@ class LyricsApp {
     
     this.api = new PlanningCenterAPI(clientId, clientSecret);
     this.processor = new LyricsProcessor();
+    // Throttle between API requests (override via Script Property: REQUEST_DELAY_MS)
+    this.requestDelayMs = Number(properties.getProperty('REQUEST_DELAY_MS')) || 500;
   }
 
   run() {
@@ -36,12 +38,16 @@ class LyricsApp {
     const arrangements = this.api.getArrangements(songId);
     arrangements.forEach(arr => {
       const arrId = arr.id;
-      const lyrics = this.api.getLyrics(songId, arrId);
+      // Throttle before fetching to avoid rate limits
+      Utilities.sleep(this.requestDelayMs);
+      const lyrics = this.api.getChordChart(songId, arrId);
       const cleaned = this.processor.cleanLyrics(lyrics);
 
       if (lyrics !== cleaned) {
+        // Throttle before update as well
+        Utilities.sleep(this.requestDelayMs);
         // TODO: Enable once verified
-        // this.api.updateLyrics(songId, arrId, cleaned);
+        // this.api.updateChordChart(songId, arrId, cleaned);
         Logger.log(`✅ Updated lyrics for "${title}" (Arrangement: ${arr.attributes.name})`);
       } else {
         Logger.log(`👌 No changes for "${title}" (Arrangement: ${arr.attributes.name})`);
