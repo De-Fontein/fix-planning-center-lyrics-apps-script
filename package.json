@@ -3,6 +3,7 @@
     "@google/clasp": "^3.1.0"
   },
   "scripts": {
+    "test": "node --test",
     "login": "clasp login",
     "create": "clasp create",
     "push": "clasp push -P .",

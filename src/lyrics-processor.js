@@ -152,7 +152,9 @@ class LyricsProcessor {
 
   convertSectionsToLyrics(sections) {
     return sections.map(section => {
-      return `${section.header}${this.lineSeparator}${section.lyrics}`;
+      // Empty sections (intro, instrumental) need two empty lines; with one they don't show up correctly.
+      const lyrics = section.lyrics.trim() ? section.lyrics : this.lineSeparator;
+      return `${section.header}${this.lineSeparator}${lyrics}`;
     }).join(this.lineSeparator);
   }
 }
